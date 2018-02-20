@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">  	
+</script>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="../codemirror-5.30.0/lib/codemirror.js"></script>
+<link rel="stylesheet" href="../codemirror-5.30.0/lib/codemirror.css">
+<script src="../codemirror-5.30.0/mode/javascript/javascript.js"></script>
+<script src="https://imasdk.googleapis.com/js/sdkloader/ima3_debug.js"></script>
+<script type="text/javascript" src="https://content.jwplatform.com/libraries/PjDyt66d.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Cooking Light Playlist &amp; Ad Tag</h2>
+				<hr>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div id="jw"></div>
+			</div>
+			<div class="col-md-6" id="codemirror">
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	
+var myLocalElement = "jwplayer('jw').setup({%	playlist: 'http://feed.timeincvideo.com/f/Qa0iQC/viant_cookinglight1',%	advertising: {%		client: 'vast',%		tag: 'https://pubads.g.doubleclick.net/gampad/ads?sz=1280x720&iu=/87044140/TI_Sponsorship/jwtest2&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]'%	}%});";
+
+var myCodeMirror = CodeMirror(document.getElementById('codemirror'), {
+  value: myLocalElement,
+  mode:  "javascript",
+  lineNumbers: true,
+  json: true,
+  lineSeparator: "%",
+  indentUnit: 4
+});
+
+jwplayer('jw').setup({	
+	playlist: 'http://feed.timeincvideo.com/f/Qa0iQC/viant_cookinglight1',	
+	advertising: {
+		client: 'vast',
+		tag: 'https://pubads.g.doubleclick.net/gampad/ads?sz=1280x720&iu=/87044140/TI_Sponsorship/jwtest2&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]'
+	}
+});
+
+
+
+
+</script>
+</html>

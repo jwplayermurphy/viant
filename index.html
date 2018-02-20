@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">  	
+</script>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://content.jwplatform.com/libraries/0BD3k9sI.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Viant Video Tracking Example</h2>
+				<hr>	
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div id="jw"></div>
+			</div>
+      <div class="col-md-6" id="output">
+		</div>
+	</div>
+</body>
+<script>
+
+//define the player object
+var jw = jwplayer("jw");
+
+jw.setup({
+
+	file: "https://content.jwplatform.com/manifests/DB7uIP0H.m3u8",
+  image: "https://content.jwplatform.com/thumbs/DB7uIP0H-720.jpg"
+
+})
+
+//define these as false on page load so we only fire them once
+var threeSec = false;
+var fifteenSec = false;
+var thirtySec = false;
+window.quarterTracker = false;
+window.halfTracker = false;
+window.threeQuarterTracker = false;
+
+//watch the playback time
+jw.on("firstFrame", function(){
+
+window.vidTime = Math.floor(jw.getDuration());
+
+//get 25% duration
+window.quarter = window.vidTime / 4;
+
+//get 50% duration
+window.half = window.quarter * 2;
+
+//get 75% duration
+window.threeQuarter = window.quarter * 3;
+
+/*
+
+100% duration fired from on("complete") below
+
+*/
+
+
+});
+
+//watch the playback time
+jw.on("time", function(){
+
+  if(Math.floor(jw.getPosition()) == window.quarter && window.quarterTracker == false){
+
+    $("#output").append("<p>Ping! Fired our 25% completion tracker! (JW Player Analytics)</p>");
+    window.quarterTracker = true;
+
+  }
+
+  if(Math.floor(jw.getPosition()) == window.half && window.halfTracker == false){
+
+    $("#output").append("<p>Ping! Fired our 50% completion tracker! (JW Player Analytics)</p>");
+    window.halfTracker = true;
+
+  }
+
+   if(Math.floor(jw.getPosition()) == window.threeQuarter && window.threeQuarterTracker == false){
+
+    $("#output").append("<p>Ping! Fired our 75% completion tracker! (JW Player Analytics)</p>");
+    window.threeQuarterTracker = true;
+
+  }
+
+  if(Math.floor(jw.getPosition()) >= 3 && threeSec === false){
+
+    $("#output").append("<p>Ping! Fired our 3 second tracker! (Third Party Pixel)</p>");
+    threeSec = true;
+
+  };
+
+  if(Math.floor(jw.getPosition()) >= 15 && fifteenSec === false){
+
+    $("#output").append("<p>Ping! Fired our 15 second tracker! (Third Party Pixel)</p>");
+    fifteenSec = true;
+
+  };
+
+
+  if(Math.floor(jw.getPosition()) >= 30 && thirtySec === false){
+
+    $("#output").append("<p>Ping! Fired our 30 second tracker! (Third Party Pixel)</p>");
+    thirtySec = true;
+
+  };
+
+});
+
+jw.on("complete", function() {
+
+  $("#output").append("<p>Ping! Fired our 100% completion tracker! (JW Player Analytics)</p>");
+
+})
+
+</script>
+
+</html>
