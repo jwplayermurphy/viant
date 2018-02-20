@@ -51,8 +51,9 @@
 						    if (this.readyState == 4 && this.status == 200) {
 						        var myObj = JSON.parse(this.responseText);
 						        //pick a random video in our array
-						        var arr_length = myObj.playlist.length - 1;
-						        var rand_int = Math.floor(Math.random() * (arr_length - 0 + 1)) + 0;
+						        var arr_length = myObj.playlist.length;
+						        var rand_int = Math.floor(Math.random() * arr_length);
+						        console.log(rand_int);
 						        //get source file from playlist object
 						        var file = myObj.playlist[rand_int].sources[0].file;
 						        //get tags to map to our ad tag
@@ -62,7 +63,7 @@
 						        console.log(mediaid);
 						        //get all tags as an array
 						        var tags_array = tags.split(",");
-						        for(var i = 0; i <= arr_length; i++){
+						        for(var i = 0; i < arr_length; i++){
 						        	var tag = tags_array[i];
 						        	if(myObj.hasOwnProperty(tag)){
 						        		jw.setup({	
@@ -78,7 +79,7 @@
 											//pubs/networks can add to this
 										});
 										//end our for loop
-						        		i = arr_length + 1;
+						        		i = arr_length;
 						        		//pubs and networks can listen for events
 						        		//add custom code here by binding to jw
 						        		//https://developer.jwplayer.com/jw-player/docs/javascript-api-reference/
