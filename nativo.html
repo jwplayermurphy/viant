@@ -28,6 +28,7 @@ function buildJW(jwplayer, playlist_url){
 	        //get tags to map to our ad tag
 	        var tags = myObj.playlist[rand_int].tags;
 	        //use mediaid to append to tracking pixels for parity
+	        //also use for thumbnail image
 	        var mediaid = myObj.playlist[rand_int].mediaid;
 	        console.log(mediaid);
 	        //get all tags as an array
@@ -37,6 +38,7 @@ function buildJW(jwplayer, playlist_url){
 	        	if(myObj.hasOwnProperty(tag)){
 	        		jw.setup({	
 						file: file,
+						image: "https://content.jwplatform.com/thumbs/"+mediaid+"-640.jpg",
 						width: 300,
 						height: 169,
 						advertising: {
