@@ -32,7 +32,7 @@ function buildJW(jwplayer, playlist_url){
 	        console.log(mediaid);
 	        //get all tags as an array
 	        var tags_array = tags.split(",");
-	        for(var i = 0; i < arr_length; i++){
+	        for(var i = 0; i < tags_array.length; i++){
 	        	var tag = tags_array[i];
 	        	if(myObj.hasOwnProperty(tag)){
 	        		jw.setup({	
@@ -42,14 +42,15 @@ function buildJW(jwplayer, playlist_url){
 						height: 169,
 						advertising: {
 							client: "googima",
-							tag: myObj[tag]
+							tag: myObj[tag],
+							vpaidcontrols: true
 						}
 						,mute:true
 						,autostart:false
 						//pubs/networks can add to this
 					});
 					//end our for loop
-	        		i = arr_length;
+	        		i = tags_array.length;
 	        		//pubs and networks can listen for events
 	        		//add custom code here by binding to jw
 	        		//https://developer.jwplayer.com/jw-player/docs/javascript-api-reference/
