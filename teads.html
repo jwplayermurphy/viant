@@ -35,19 +35,29 @@ function buildJW(jwplayer, playlist_url){
 	        for(var i = 0; i < tags_array.length; i++){
 	        	var tag = tags_array[i];
 	        	if(myObj.hasOwnProperty(tag)){
-	        		jw.setup({	
-						file: file,
-						image: "https://content.jwplatform.com/thumbs/"+mediaid+"-640.jpg",
-						width: 300,
-						height: 169,
-						advertising: {
-							client: "googima",
-							tag: myObj[tag],
-							vpaidcontrols: true
-						}
-						,mute:true
-						,autostart:false
-						//pubs/networks can add to this
+	        		/*
+
+	        		write your own method here that takes myObj[tag] as an argument
+	        		
+	        		you can now target " myObj[tag] " to check for a valid VAST
+	        		
+	        		If you get an empty vast, don't call setup() below
+
+	        		If it is a valid vast, store it as a string and pass it back into the setup function under "tag"
+
+	        		var myXmlAsString = "<?xml properly encoded?>";
+
+	        		*/
+	        		jw.setup({
+						playlist:"https://cdn.jwplayer.com/v2/media/"+mediaid,
+						advertising:{
+							client:"googima",
+							tag:myObj[tag],
+							//tag: myXmlAsString, New Way once you add your logic
+							vpaidcontrols:true
+						},
+						mute:true,
+						autostart:false
 					});
 					//end our for loop
 	        		i = tags_array.length;
