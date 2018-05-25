@@ -11,16 +11,16 @@
 
 
     function fireTag(tag, id) {
-        var this_tag = tag + ";jwmediaid=" + id;
+        var tagToFire = tag + ";jwmediaid=" + id;
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {}
         };
-        xhttp.open("GET", this_tag, true);
+        xhttp.open("GET", tagToFire, true);
         xhttp.send();
     }
 
-    function buildJW(jwplayer, playlist_url) {
+    function buildJW(playlistUrl) {
         var playerInstance = jwplayer("jwplayer_video_container");
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
@@ -77,9 +77,9 @@
                 }
             }
         };
-        xmlhttp.open("GET", playlist_url, true);
+        xmlhttp.open("GET", playlistUrl, true);
         xmlhttp.send();
     }
-    buildJW(jwplayer, "https://cdn.jwplayer.com/v2/playlists/b53dbsV1");
+    buildJW("https://cdn.jwplayer.com/v2/playlists/b53dbsV1");
 </script>
 <!-- End JW Player Embed Code Here -->
