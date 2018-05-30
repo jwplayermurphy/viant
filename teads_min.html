@@ -71,19 +71,20 @@
                         var thirtySec = false;
 
                         jw.on("time", function () {
-                            if (Math.floor(playerInstance.getPosition()) >= 3 && !threeSec) {
+                            var currentPosition = playerInstance.getPosition()
+                            if (Math.floor(currentPosition) >= 3 && !threeSec) {
                                 fireTag(
                                     tagsToFire.threeSecond,
                                     mediaid);
                                 threeSec = true;
                             };
-                            if (Math.floor(playerInstance.getPosition()) >= 15 && !fifteenSec) {
+                            if (Math.floor(currentPosition) >= 15 && !fifteenSec) {
                                 fireTag(
                                     tagsToFire.fifteenSecond,
                                     mediaid);
                                 fifteenSec = true;
                             };
-                            if (Math.floor(playerInstance.getPosition()) >= 30 && !thirtySec) {
+                            if (Math.floor(currentPosition) >= 30 && !thirtySec) {
                                 fireTag(
                                     tagsToFire.thirtySecond,
                                     mediaid);
