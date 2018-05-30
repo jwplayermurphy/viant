@@ -39,8 +39,7 @@
                 var playlistTags = tags.split(",");
 
                 for (var i = 0; i < playlistTags.length; i++) {
-                    let tag = playlistTags[i];
-                    
+                    var tag = playlistTags[i];
                     // This is one way to do it -- maybe better future proofed in that you just have to
                     // add macros outerscope; also allows the tags themselves to take different values
                     for (var macro in potentialMacros) {
@@ -53,7 +52,7 @@
 
                     // More literally you could do.. If you are sure the macros won't change. 
 
-                    tag.replace("__page-domain__", location.href)
+                    tag = tag.replace("__page-domain__", location.href)
                     
                     if (playerResponseObject.hasOwnProperty(tag)) {
                         jw.setup({
