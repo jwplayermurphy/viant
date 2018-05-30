@@ -9,6 +9,11 @@
         thirtySecond: "https://x.vindicosuite.com/dserve/t=d;l=557923;c=1065426;b=4819689;ad=COOGIhC66g0YoDMgASgEMMeUATiV1wFAz4IUSM7cGFDSg0FY6ZWmAmDKgBFosq4ncAJ4AYgBAJABAZgBAaIBEzQwNDYzOTA5OTkxNzY3NjAyODayAQVWSURFT7gBAcABAMgBANABANgBAOgBi-ns-5As;a=278602;ts=TIMESTAMP",
     }
 
+    var potentialMacros = {
+        "__test-1__": "value 1",
+        "__test-2__": "value 2",
+        "__page-domain__": location.href,
+    };
 
     function fireTag(tag, id) {
         var tagToFire = tag + ";jwmediaid=" + id;
@@ -35,6 +40,20 @@
 
                 for (var i = 0; i < playlistTags.length; i++) {
                     var tag = playlistTags[i];
+                    // This is one way to do it -- maybe better future proofed in that you just have to
+                    // add macros outerscope; also allows the tags themselves to take different values
+                    for (var macro in potentialMacros) {
+                        var macroValue = potentialMacros[macro];
+                        var numLoops = Object.keys(potentialMacros).length;
+                        for (j = 0; j < numLoops; j++) {
+                            tag = tag.replace(macro, macroValue);
+                        }
+                    }
+
+                    // More literally you could do.. If you are sure the macros won't change. 
+
+                    tag = tag.replace("__page-domain__", location.href)
+                    
                     if (playerResponseObject.hasOwnProperty(tag)) {
                         jw.setup({
                             playlist: "https://cdn.jwplayer.com/v2/media/" + mediaid,
@@ -46,27 +65,26 @@
                             mute: true,
                             autostart: false
                         });
-                        // This line doesn't make sense to me (esp in conjunction with line 37). Why are you setting i?)
                         i = playlistTags.length;
-
                         var threeSec = false;
                         var fifteenSec = false;
                         var thirtySec = false;
 
                         jw.on("time", function () {
-                            if (Math.floor(playerInstance.getPosition()) >= 3 && !threeSec) {
+                            var currentPosition = playerInstance.getPosition()
+                            if (Math.floor(currentPosition) >= 3 && !threeSec) {
                                 fireTag(
                                     tagsToFire.threeSecond,
                                     mediaid);
                                 threeSec = true;
                             };
-                            if (Math.floor(playerInstance.getPosition()) >= 15 && !fifteenSec) {
+                            if (Math.floor(currentPosition) >= 15 && !fifteenSec) {
                                 fireTag(
                                     tagsToFire.fifteenSecond,
                                     mediaid);
                                 fifteenSec = true;
                             };
-                            if (Math.floor(playerInstance.getPosition()) >= 30 && !thirtySec) {
+                            if (Math.floor(currentPosition) >= 30 && !thirtySec) {
                                 fireTag(
                                     tagsToFire.thirtySecond,
                                     mediaid);
